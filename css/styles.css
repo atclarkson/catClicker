@@ -29,6 +29,16 @@ img {
     font-size: 15vw;
 }
 
+.name {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -500%);
+    z-index: 100;
+    font-family: monospace;
+    font-size: 5vw;
+  }
+
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */

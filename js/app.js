@@ -1,22 +1,31 @@
+const NUM_CATS = 4;
+
 class CatClicker {
-  constructor(url, index) {
+  constructor(url, name, index) {
     this.imgUrl = url;
     this.clickCounter;
     this.catPic;
+    this.domName;
     this.counter = 0;
     this.index = index;
+    this.name = name;
   }
   getDomElements() {
     this.clickCounter = document.getElementById(`numClicks-${this.index}`);
+    this.domName = document.getElementById(`catName-${this.index}`);
     this.catPic = document.getElementById(`catPic-${this.index}`);
   }
   addOne() {
     let self = this;
     this.catPic.addEventListener('click', function(){
-      self.counter += 21;
+      self.counter += 1;
       self.clickCounter.textContent = self.counter;
     }, false);
     this.clickCounter.addEventListener('click', function(){
+      self.counter++;
+      self.clickCounter.textContent = self.counter;
+    }, false);
+    this.domName.addEventListener('click', function(){
       self.counter++;
       self.clickCounter.textContent = self.counter;
     }, false);
@@ -24,16 +33,19 @@ class CatClicker {
 }
 
 const catPicArray = [
-  'img/cat-2083492_1920.jpg',
-  'img/cat-1285634_1920.png',
-  'img/cat-323262_1920.jpg',
-  'img/animal-339400_1920.jpg'
+  ['img/cat-2083492_1920.jpg', 'Rudy'],
+  ['img/cat-1285634_1920.png', 'James'],
+  ['img/cat-323262_1920.jpg', 'Buckbeak'],
+  ['img/animal-339400_1920.jpg', 'Ralph'],
+  ['img/cat-914110_1920.jpg', 'Hendricks'],
+  ['img/cat-1192026_1920.jpg', 'Flava'],
+  ['img/cat-1647775_1920.jpg', 'Arnie'],
+  ['img/cat-694730_1920.jpg', 'Sam']
 ];
 
 let cats = [];
-const numCats = 4;
-for (let i = 0; i < numCats; i++) {
-  cats.push(new CatClicker(catPicArray[i], i));
+for (let i = 0; i < NUM_CATS; i++) {
+  cats.push(new CatClicker(catPicArray[i][0],catPicArray[i][1], i));
 }
 
 // Build the dom.  Run through an array of catClicker objects and assemble the dom
@@ -42,7 +54,8 @@ for (let cat of cats) {
   containerDiv.innerHTML +=
     `
     <div class=\"container\">
-      <img id=\"catPic-${cat.index}\" src=${catPicArray[cat.index]} alt=\"A cat image to be clicked on\">
+      <img id=\"catPic-${cat.index}\" src=${cat.imgUrl} alt=\"A cat image to be clicked on\">
+      <div id=\"catName-${cat.index}\" class=\"name noselect\">${cat.name}</div>
       <div id=\"numClicks-${cat.index}\" class=\"counter noselect\">0</div>
     </div>
     `
