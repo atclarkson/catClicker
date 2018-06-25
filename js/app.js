@@ -1,4 +1,6 @@
-const NUM_CATS = 4;
+const NUM_CATS = 8;
+let cats = [];
+
 
 class CatClicker {
     constructor(url, name, index) {
@@ -30,6 +32,11 @@ class CatClicker {
             self.clickCounter.textContent = self.counter;
         }, false);
     }
+    selectCat() {
+        buildCat();
+        this.getDomElements();
+        this.addOne();
+    }
 }
 
 const catPicArray = [
@@ -43,26 +50,42 @@ const catPicArray = [
     ['img/cat-694730_1920.jpg', 'Sam']
 ];
 
-let cats = [];
+
 for (let i = 0; i < NUM_CATS; i++) {
     cats.push(new CatClicker(catPicArray[i][0],catPicArray[i][1], i));
 }
+let activeCat = cats[0];
 
 // Build the dom.  Run through an array of catClicker objects and assemble the dom
-const containerDiv = document.querySelector('.flex-container');
-for (let cat of cats) {
-    containerDiv.innerHTML +=
+const mainCat = document.querySelector('.main-cat');
+function buildCat() {
+    mainCat.innerHTML =
     `
     <div class="container">
-      <img id="catPic-${cat.index}" src=${cat.imgUrl} alt="A cat image to be clicked on">
-      <div id="catName-${cat.index}" class="name noselect">${cat.name}</div>
-      <div id="numClicks-${cat.index}" class="counter noselect">0</div>
+      <img id="catPic-${activeCat.index}" src=${activeCat.imgUrl} alt="A cat image to be clicked on">
+      <div id="catName-${activeCat.index}" class="name noselect">${activeCat.name}</div>
+      <div id="numClicks-${activeCat.index}" class="counter noselect">${activeCat.counter}</div>
     </div>
     `;
-}
 
-// Get Dom Elements and Add an event listener to each objects
-for (let cat of cats) {
-    cat.getDomElements();
-    cat.addOne();
 }
+buildCat();
+const sideCat = document.querySelector('.side-cat');
+let thisCat = [];
+for (let cat of cats) {
+    sideCat.innerHTML +=
+    `
+    <li><div id="sideCatName-${cat.index}" class="side-cat-list">${cat.name}</div></li>
+    `;
+}
+for (let cat of cats) {
+    thisCat[cat.index] = document.getElementById(`sideCatName-${cat.index}`);
+    thisCat[cat.index].addEventListener('click', function(){
+        activeCat = cats[cat.index];
+        cats[cat.index].selectCat();
+    }, false);
+}
+// Get Dom Elements and Add an event listener to each objects
+
+activeCat.getDomElements();
+activeCat.addOne();
