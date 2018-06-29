@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 img {
     width: 100%;
     height: auto;
@@ -9,18 +12,30 @@ img {
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
+
 .main-cat {
   width: 75%;
 }
-
-.side-cat {
+.side {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-right: 30px;
   width: 25%;
+}
+@media only screen and (max-width: 550px) {
+  .main-cat,
+  .side {
+    width: 100%;
+  }
+
+}
+.side-cat {
   margin: auto 0;
 }
 .side-cat li {
   list-style-type: none;
   padding: 10px;
-  width: 200%;
   border-bottom: 1px solid black;
 }
 
