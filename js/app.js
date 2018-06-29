@@ -16,6 +16,16 @@ $(function() {
     };
 
     const controller = {
+        init: function() {
+            // Build the dom.  Run through an array of catClicker objects and assemble the dom
+            viewMain.init();
+            viewMain.render();
+            viewSide.init();
+            viewSide.render();
+            // Get Dom Elements and Add an event listener to each objects
+            viewMain.activeCat.getDomElements();
+            viewMain.activeCat.addOne();
+        },
         getActiveCat: function () {
             for (let i = 0; i < data.numCats; i++) {
                 data.cats.push(new this.CatClicker(data.catPicArray[i][0],data.catPicArray[i][1], i));
@@ -58,6 +68,21 @@ $(function() {
                 this.getDomElements();
                 this.addOne();
             }
+        },
+        makeCatList: function() {
+            for (let cat of data.cats) {
+                viewSide.sideCat.innerHTML +=
+                `
+                <li><div id="sideCatName-${cat.index}" class="side-cat-list">${cat.name}</div></li>
+                `;
+            }
+            for (let cat of data.cats) {
+                viewSide.thisCat[cat.index] = document.getElementById(`sideCatName-${cat.index}`);
+                viewSide.thisCat[cat.index].addEventListener('click', function(){
+                    viewMain.activeCat = data.cats[cat.index];
+                    data.cats[cat.index].selectCat();
+                }, false);
+            }
         }
 
     };
@@ -69,14 +94,13 @@ $(function() {
         },
         render: function() {
             this.mainCat.innerHTML =
-          `
-          <div class="container">
-            <img id="catPic-${this.activeCat.index}" src=${this.activeCat.imgUrl} alt="A cat image to be clicked on">
-            <div id="catName-${this.activeCat.index}" class="name noselect">${this.activeCat.name}</div>
-            <div id="numClicks-${this.activeCat.index}" class="counter noselect">${this.activeCat.counter}</div>
-          </div>
-          `;
-
+            `
+            <div class="container">
+              <img id="catPic-${this.activeCat.index}" src=${this.activeCat.imgUrl} alt="A cat image to be clicked on">
+              <div id="catName-${this.activeCat.index}" class="name noselect">${this.activeCat.name}</div>
+              <div id="numClicks-${this.activeCat.index}" class="counter noselect">${this.activeCat.counter}</div>
+                </div>
+              `;
         }
     };
 
@@ -86,35 +110,8 @@ $(function() {
             this.thisCat = [];
         },
         render: function() {
-            for (let cat of data.cats) {
-                this.sideCat.innerHTML +=
-          `
-          <li><div id="sideCatName-${cat.index}" class="side-cat-list">${cat.name}</div></li>
-          `;
-            }
-            for (let cat of data.cats) {
-                this.thisCat[cat.index] = document.getElementById(`sideCatName-${cat.index}`);
-                this.thisCat[cat.index].addEventListener('click', function(){
-                    viewMain.activeCat = data.cats[cat.index];
-                    data.cats[cat.index].selectCat();
-                }, false);
-            }
+            controller.makeCatList();
         }
     };
-
-
-
-
-    // Build the dom.  Run through an array of catClicker objects and assemble the dom
-
-
-    viewMain.init();
-    viewMain.render();
-    viewSide.init();
-    viewSide.render();
-
-    // Get Dom Elements and Add an event listener to each objects
-
-    viewMain.activeCat.getDomElements();
-    viewMain.activeCat.addOne();
+    controller.init();
 }());
