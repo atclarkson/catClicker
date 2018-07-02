@@ -7,6 +7,10 @@ img {
     max-width: 100%
 }
 
+.hidden {
+  display: none;
+}
+
 .flex-container {
   display: flex;
   flex-wrap: wrap;

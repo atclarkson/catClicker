@@ -9,20 +9,27 @@
   <title>Cat Clicker</title>
 </head>
 <body>
-<div class="cat-list">
-  <ul>
-  </ul>
-</div>
-<div class="cat-main">
-</div>
-
-
   <div class="flex-container">
     <div class="main-cat">
     </div>
     <div class="side">
       <ul class="side-cat">
       </ul>
+    </div>
+    <div class="admin-form">
+      <button id="admin">Admin</button></br>
+      <form id="admin-form" class="hidden">
+      <label for="cat-name">Cat Name</label>
+      <input type="text" id="cat-name"></br>
+      <label for="cat-url">URL</label>
+      <input type="text" id="cat-url"></br>
+      <label for="cat-clicks">Number of Clicks</label>
+      <input type="text" id="cat-clicks"></br>
+      <input type="submit" value="Submit">
+      <button type="cancel" value="Cancel" id="cancel">Cancel</button>
+    </form>
+
+
     </div>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script type="text/javascript" src="js/app.js"></script>

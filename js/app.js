@@ -114,4 +114,6 @@ $(function() {
         }
     };
     controller.init();
+
+
 }());
